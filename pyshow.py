@@ -1,13 +1,13 @@
 import pickle
 from datetime import date
 from os.path import isfile
-from streamtv import StreamTVService
+from pyshow.streamtv import StreamTVService
 
 class Pyshow(object):
 
     def __init__(self, *, config_file = 'config.cfg'):
         self.config_file = config_file
-        if isfile(config_file):
+        if self.has_config():
             with open(self.config_file, 'rb') as cf:
                 self.data = pickle.load(cf)
         else:
@@ -15,6 +15,9 @@ class Pyshow(object):
 
     def __getitem__(self, item):
         return self.data['streams'][item]
+
+    def has_config(self):
+        return isfile(self.config_file)
         
     def add_stream(self, stream_object):
         if isinstance(stream_object, StreamTVService):

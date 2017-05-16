@@ -1,4 +1,4 @@
-from streamtv import StreamTVService
+from pyshow.streamtv import StreamTVService
 import requests
 
 class TheCW(StreamTVService):
