@@ -5,7 +5,6 @@ Extremely alpha
 
 Example usage:
 
-	```
 	>>> from pyshow import Pyshow
 	>>> from pyshow import Hulu, TheCW
 	>>> ps = Pyshow(config_file = 'my_config.cfg')
@@ -21,4 +20,3 @@ Example usage:
 	'http://ib3.huluim.com/video/60876310?size=145x80&img=1'
 	>>> ps['Hulu']['trial and error']['title']
 	'The Verdict'
-	```
