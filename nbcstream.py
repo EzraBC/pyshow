@@ -9,18 +9,6 @@ class NBC(StreamTVService):
     def __init__(self):
         StreamTVService.__init__(self, NBC.NAME, NBC.URL.format(''))
 
-    @staticmethod
-    def _get_dom(html_text, dom_name, *, end_char, start_str = None):
-        if not start_str == None:
-            html_text = html_text[html_text.find(start_str):]
-        start = html_text.find(dom_name) + len(dom_name)
-        end = html_text.find(end_char,start)
-        arg = html_text[start:end]
-        arg = arg.strip()
-        arg = arg.strip("'")
-        arg = arg.strip('"')
-        return arg
-
     def _update_show_data(self, show):
         ret = dict()
         r = requests.get(self.URL.format(show))

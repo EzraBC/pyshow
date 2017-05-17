@@ -19,6 +19,18 @@ class StreamTVService(object):
         name = name.replace('"', '')
         return name
 
+    @staticmethod
+    def _get_dom(html_text, dom_name, *, end_char, start_str = None):
+        if not start_str == None:
+            html_text = html_text[html_text.find(start_str):]
+        start = html_text.find(dom_name) + len(dom_name)
+        end = html_text.find(end_char,start)
+        arg = html_text[start:end]
+        arg = arg.strip()
+        arg = arg.strip("'")
+        arg = arg.strip('"')
+        return arg
+
     @classmethod
     def _update_show_data(cls, show):
         raise NotImplementedError('{cls.NAME}\'s update_show is not yet implemented')

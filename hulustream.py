@@ -11,20 +11,10 @@ class Hulu(StreamTVService):
     def __init__(self):
         StreamTVService.__init__(self, Hulu.NAME, Hulu.URL.format(''))
 
-    @staticmethod
-    def _get_dom(html_text, dom_name, *, end_char):
-        start = html_text.find(dom_name) + len(dom_name)
-        end = html_text.find(end_char,start)
-        arg = html_text[start:end]
-        arg = arg.strip()
-        arg = arg.strip("'")
-        arg = arg.strip('"')
-        return arg
-
     def _update_show_data(self, show):
         r = requests.get(self.URL.format(show))
         at = self._get_dom(r.text, 'API_DONUT = ', end_char=';')
-        show_id = self._get_dom(r.text, 'rawData = {"id": ', end_char=',')
+        show_id = self._get_dom(r.text, '"id":', start_str='rawData', end_char=',')
         json_url = Hulu.JSON_URL_TEMPLATE.format(show_id, at)
         r = requests.get(json_url)
         recent_ep_info = r.json()['data'][0]['video']

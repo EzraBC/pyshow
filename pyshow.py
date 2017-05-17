@@ -58,7 +58,6 @@ class Pyshow(object):
         else:
             raise KeyError('Pyshow: Stream {} has not been added to this instance'.format(stream))
     
-
     def new_shows(self):
         ns = []
         self.check_for_updates()

@@ -9,23 +9,13 @@ class TheCW(StreamTVService):
     def __init__(self):
         StreamTVService.__init__(self, TheCW.NAME, TheCW.URL.format(''))
 
-    @staticmethod
-    def _get_dom(html_text, dom_name, *, end_char):
-        start = html_text.find(dom_name) + len(dom_name)
-        end = html_text.find(end_char,start)
-        arg = html_text[start:end]
-        arg = arg.strip()
-        arg = arg.strip("'")
-        arg = arg.strip('"')
-        return arg
-
     def _update_show_data(self, show):
         ret = dict()
         ret['id'] = None
         r = requests.get(self.URL.format(show))
-        ret['title'] = self._get_dom(r.text, 'itemprop="name" content=', end_char='/')
-        ret['thumbnail'] = self._get_dom(r.text, 'itemprop="thumbnail" content=', end_char='/')
-        date = self._get_dom(r.text[:r.text.find('SHARE MENU BEGIN')], 'Original Air Date: ', end_char='<')
+        ret['title'] = self._get_dom(r.text, 'content=', start_str='itemprop="name"', end_char='/>')
+        ret['thumbnail'] = self._get_dom(r.text, 'content=', start_str='itemprop="thumbnail"', end_char='/>')
+        date = self._get_dom(r.text, 'Original Air Date:', start_str = 'SHARE MENU BEGIN', end_char='<')
         date = date.split(sep='.')
         year = date.pop()
         year = '20' + year
